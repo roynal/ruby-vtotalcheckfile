@@ -32,10 +32,10 @@ Installation
 
     git clone git://github.com/hink/ruby-vtotalcheckfile.git
     cd ruby-vtotalcheckfile
-    # edit vtotalcheckfile and insert your VirusTotal API ke (line 85)
+    # edit vtotalcheckfile and insert your VirusTotal API key (line 85)
     ./vtotalcheckfile -h
 
-**Usage
+Usage
 ---
 
 ## Options

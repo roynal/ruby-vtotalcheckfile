@@ -36,6 +36,7 @@ require 'rdoc/usage'
 require 'ostruct'
 require 'date'
 require 'rest-client'
+require 'digest/md5'
 
 require 'term/ansicolor'
 
@@ -183,8 +184,9 @@ class App
     end
     
     def process_command      
-      ohai "Checking to see if file exists on VirusTotal"
       if !@options.force
+        ohai "Checking to see if file exists on VirusTotal"
+        okai "MD5: " + getMD5(@filePath) if @options.verbose
         return if reportExists(@filePath)
       end
       ohai "Attempting to upload" + @filePath + " (" + getFileSize(@filePath) + ") to VirusTotal"
@@ -226,7 +228,7 @@ class App
     end
     
     def getReport(filePath, isInitial)
-      response = RestClient.post 'https://www.virustotal.com/api//get_file_report.json', :resource => getMD5(@filePath), :key => @virusTotalAPIKey
+      response = RestClient.post 'https://www.virustotal.com/api/get_file_report.json', :resource => getMD5(@filePath), :key => @virusTotalAPIKey
       result = JSON.parse(response.to_str)
       case result["result"]
         when 1
@@ -278,20 +280,22 @@ class App
       size = File.size(@filePath)
       sizeStr = '0'
       case size
-        when size > 1048576
-          # MB
-          sizeStr = (size/1048576).to_s + "MB"
         when size > 1024
           # KB
           sizeStr = (size/1024).to_s + "KB"
+        when size > 1048576
+          # MB
+          sizeStr = (size/1048576).to_s + "MB"
         else
           # B
           sizeStr = size.to_s + "B"
       end
+      
+      return sizeStr
     end
     
     def getMD5(filePath)
-        @resource = `md5 -q #{@filePath}`.chomp if @resource == ''
+        @resource = Digest::MD5.hexdigest(File.read(@filePath)) if @resource == ''
         return @resource
     end
     
