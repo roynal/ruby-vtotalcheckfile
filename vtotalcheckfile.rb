@@ -184,6 +184,11 @@ class App
     end
     
     def process_command      
+      if @virusTotalAPIKey == ''
+        onoe "No VirusTotal API key Found! Get one at www.VirusTotal.com."
+        exit 1
+      end
+      
       if !@options.force
         ohai "Checking to see if file exists on VirusTotal"
         okai "MD5: " + getMD5(@filePath) if @options.verbose
