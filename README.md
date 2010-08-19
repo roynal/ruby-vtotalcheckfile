@@ -35,9 +35,6 @@ Installation
     # edit vtotalcheckfile and insert your VirusTotal API key (line 85)
     ./vtotalcheckfile -h
 
-Usage
----
-
 ## Options
 	
 	-f, --force         Force VirusTotal to re-analyze your file
