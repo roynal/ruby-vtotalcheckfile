@@ -82,7 +82,7 @@ class App
     @arguments = arguments
     @stdin = stdin
     
-    @virusTotalAPIKey = ""
+    @virusTotalAPIKey = "a7489905b8f0dcff3c10c470d02aef13b28de192af4a9e151050ed85fb545d51"
     @filePath = ''
     @resource = ''
     @uploadTIme = ''
@@ -220,7 +220,7 @@ class App
     
     def sendFile(filepath)
       @uploadTime = DateTime.now
-      response = RestClient.post 'https://www.virustotal.com/api/scan_file.json', :file => File.new(filepath, 'rb'), :key => @virusTotalAPIKey
+      response = RestClient.post 'http://www.virustotal.com/api/scan_file.json', :file => File.new(filepath, 'rb'), :key => @virusTotalAPIKey
       result = JSON.parse(response.to_str)
       case result["result"]
         when 1
@@ -233,7 +233,7 @@ class App
     end
     
     def getReport(filePath, isInitial)
-      response = RestClient.post 'https://www.virustotal.com/api/get_file_report.json', :resource => getMD5(@filePath), :key => @virusTotalAPIKey
+      response = RestClient.post 'http://www.virustotal.com/api/get_file_report.json', :resource => getMD5(@filePath), :key => @virusTotalAPIKey
       result = JSON.parse(response.to_str)
       case result["result"]
         when 1
