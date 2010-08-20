@@ -82,7 +82,7 @@ class App
     @arguments = arguments
     @stdin = stdin
     
-    @virusTotalAPIKey = "a7489905b8f0dcff3c10c470d02aef13b28de192af4a9e151050ed85fb545d51"
+    @virusTotalAPIKey = ""
     @filePath = ''
     @resource = ''
     @uploadTIme = ''
